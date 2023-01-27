@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MovieContext from './MovieContext';
 
-function App() {
-  const [count, setCount] = useState(0)
+import Search from './pages/Search'
+import Watchlist from './pages/Watchlist'
+import Error from './pages/Error'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Search />,
+    errorElement: <Error />,
+  },
+  {
+    path: '/watchlist',
+    element: <Watchlist />
+  }
+]);
+
+export default function App() {
+  const [savedMovies, setSavedMovies] = React.useState(JSON.parse(localStorage.getItem('movies')) || {})
+  
+  function handleMovieClick(movieObject) {
+    setSavedMovies(prev => {
+      const newState = {...prev}
+      if (movieObject.id in newState) {
+        delete newState[movieObject.id]
+      } else {
+        newState[movieObject.id] = movieObject
+      }
+      localStorage.setItem('movies', JSON.stringify(newState))
+      return newState
+    })
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <MovieContext.Provider value={{savedMovies, handleMovieClick}}>
+      <RouterProvider router={router}>
+      </RouterProvider>
+    </MovieContext.Provider>
   )
 }
-
-export default App
