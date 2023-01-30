@@ -9,12 +9,12 @@ import Error from './pages/Error'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/react-watchlist/",
     element: <Search />,
     errorElement: <Error />,
   },
   {
-    path: '/watchlist',
+    path: '/react-watchlist/watchlist',
     element: <Watchlist />
   }
 ]);

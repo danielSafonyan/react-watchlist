@@ -29,7 +29,7 @@ export default function Search() {
     }
     return (
         <>
-            <Header path='/watchlist' destination={'My Watchlist'} curLocation={"Find your movie"} />
+            <Header path='/react-watchlist/watchlist' destination={'My Watchlist'} curLocation={"Find your movie"} />
             <section>
                 <form onSubmit={handleFormSubmit}>
                     <i className="fa-solid fa-magnifying-glass"></i>

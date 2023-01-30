@@ -19,7 +19,7 @@ export default function Watchlist(props) {
     
     return (
         <>
-            <Header path='/' destination={'Search for movies'} curLocation={"My Watchlist"} />
+            <Header path='/react-watchlist/' destination={'Search for movies'} curLocation={"My Watchlist"} />
             {placeHolder.isShown && <StartExploringPlaceholder message={placeHolder.message}/>}
             {!isEmpty(savedMovies) && Object.values(savedMovies).map(el => <Movie {...el} key={el.id}/>)}
         </>
